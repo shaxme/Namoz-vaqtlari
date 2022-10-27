@@ -9,19 +9,31 @@
     <title>Namoz vaqti</title>
   </head>
   <body>
-    <h2 class="">Namoz vaqtlari</h2>
+    <h2 class="d-flex justify-content-center">Namoz vaqtlari</h2>
 
-    <hr />
+    <hr class="d-flex justify-content-center mx-auto w-75" />
 
-    <div class="d-flex">
+    <div class="d-flex justify-content-evenly align-items-center pb-3">
       <p>Hududni tanlang:</p>
       <select class="elSelect" id="regionSelect"></select>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-around pb-5">
+      <div class="hudud">
+        <span id="hudud"></span>
+      </div>
+
+      <div>
+        <span id="data"></span>
+        <span id="time"></span>
+      </div>
+      
     </div>
 
     <div class="mintaqa" id="mintaqa">
     </div>
 
-    <ul class="card list-group-item" id="times"></ul>
+    <ul class="lists col-12 d-flex flex-wrap justify-content-evenly align-items-center" id="times"></ul>
 
     <script src="./js/script.js"></script>
   </body>

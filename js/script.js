@@ -1,6 +1,8 @@
 const elSelect = document.querySelector("#regionSelect");
 const elTimesList = document.querySelector("#times");
 const elMintaqa = document.querySelector("#mintaqa");
+const elHudud = document.querySelector('#hudud');
+
 
 const BASE_URL = "https://islomapi.uz/api";
 
@@ -96,30 +98,60 @@ const regions = [
   "Kоsоn",
 ];
 
-const defaultRegion = localStorage.getItem("region");
+const defaultRegion = localStorage.getItem("region")
+  ? localStorage.getItem("region")
+  : regions[0];
 console.log(defaultRegion);
 
-fetch(BASE_URL + "/monthly?region=" + defaultRegion + "&month=4")
+fetch(BASE_URL + "/monthly?region=" + defaultRegion + "&month=1")
   .then((res) => res.json())
   .then((data) => {
     console.log(data);
     elTimesList.innerHTML = "";
-    elSelect.value = data.region;
 
     data.forEach((item) => {
-      const elListTime = document.createElement("li");
-      elListTime.innerHTML = item.times;
-      elTimesList.appendChild(elListTime);
-
+      const elListTimesItem = document.createElement("li");
 
       Object.keys(item.times).forEach((i) => {
-        const elListTime = document.createElement("li");
-        elListTime.innerHTML = i.times;
-        elTimesList.appendChild(elListTime);
+        const elListTime = document.createElement("p");
+        elListTime.innerHTML = `${i}: ${item.times[i]}`;
+        elListTimesItem.appendChild(elListTime);
       });
-    })
+      elListTimesItem.style.border = "1px solid #444";
+      elListTimesItem.style.borderRadius = "10px";
+      elListTimesItem.style.margin = "10px";
+      elListTimesItem.style.padding = "10px";
+      elTimesList.appendChild(elListTimesItem);
+    });
   });
 
+async function renderDate() {
+  const data = new Date();
+  const monthNames = [
+    "yanvar",
+    "fevral",
+    "mart",
+    "aprel",
+    "may",
+    "iyun",
+    "iyul",
+    "avgust",
+    "sentabr",
+    "oktabr",
+    "noyabr",
+    "dekabr",
+  ];
+
+  const elData = document.querySelector('#data');
+  const elTime = document.querySelector('#time');
+
+  elData.innerHTML = `
+    ${data.getDate()}-${monthNames[data.getMonth()]} ${data.getFullYear()}-yil`;setInterval(() => {
+    const data = new Date();
+    elTime.innerHTML = `${data.getHours()}:${data.getMinutes()}:${data.getSeconds()}`;
+  }, 1000);
+}
+renderDate();
 
 regions.forEach((region) => {
   const optionsEl = document.createElement("option");
@@ -129,16 +161,19 @@ regions.forEach((region) => {
 });
 
 elSelect.value = defaultRegion;
+elHudud.innerHTML = `Mintaqa: ${defaultRegion}`;
 
 elSelect.addEventListener("change", (evt) => {
   console.log(elSelect.value);
+  
+  elHudud.innerHTML = `Mintaqa: ${evt.target.value}`;
   localStorage.setItem("region", elSelect.value);
   fetch(BASE_URL + "/day?region=" + elSelect.value)
     .then((res) => res.json())
     .then((data) => {
       elTimesList.innerHTML = "";
       elSelect.value = data.region;
-
+      
       function mintaqa() {
         regions.forEach((evt) => {
           elSelect.addEventListener("change", (e) => {
