@@ -103,7 +103,7 @@ const defaultRegion = localStorage.getItem("region")
   : regions[0];
 console.log(defaultRegion);
 
-fetch(BASE_URL + "/monthly?region=" + defaultRegion + "&month=1")
+fetch(BASE_URL + "/monthly?region=" + defaultRegion + "&month=10")
   .then((res) => res.json())
   .then((data) => {
     console.log(data);

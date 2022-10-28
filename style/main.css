@@ -1,3 +1,11 @@
+body {
+  background-color: #ccc;
+}
+
+select {
+  background-color: transparent;
+}
+
 .elSelect {
   border-radius: 50px;
 }
